@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Sistema de Referidos UNAC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sistema de gestión de referidos para la Universidad Nacional de Colombia.
 
-## Available Scripts
+## 🚀 Despliegue en Producción
 
-In the project directory, you can run:
+### Requisitos Previos
+- Node.js v16 o superior
+- PostgreSQL v12 o superior
+- Variables de entorno configuradas
 
-### `npm start`
+### Pasos para Despliegue
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone <url-del-repositorio>
+   cd STM-EMBAJADOR
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   cd backend && npm install
+   ```
 
-### `npm test`
+3. **Configurar variables de entorno:**
+   - Copiar `backend/.env.example` a `backend/.env`
+   - Configurar las credenciales de base de datos y servicios
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Construir el frontend:**
+   ```bash
+   npm run build
+   ```
 
-### `npm run build`
+5. **Iniciar el servidor:**
+   ```bash
+   npm run start
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Notas Importantes
+- Las tablas de base de datos deben estar creadas previamente
+- No se ejecutan migraciones automáticas
+- El sistema utiliza las tablas existentes en la base de datos
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Desarrollo Local
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Iniciar en modo desarrollo:
+```bash
+npm run dev
+```
 
-### `npm run eject`
+Esto iniciará tanto el servidor backend (puerto 5000) como el frontend (puerto 3000).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📁 Estructura del Proyecto
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+STM-EMBAJADOR/
+├── backend/           # Servidor Node.js/Express
+│   ├── config/        # Configuración de base de datos
+│   ├── controllers/   # Controladores de la API
+│   ├── middleware/    # Middleware de autenticación
+│   ├── routes/        # Rutas de la API
+│   ├── services/      # Servicios externos
+│   └── uploads/       # Archivos subidos
+├── src/               # Frontend React
+│   ├── components/    # Componentes reutilizables
+│   ├── pages/         # Páginas de la aplicación
+│   ├── styles/        # Hojas de estilo CSS
+│   └── contexts/      # Contextos de React
+└── public/            # Archivos públicos
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🔐 Variables de Entorno
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Crear archivo `backend/.env` con las siguientes variables:
 
-## Learn More
+```env
+# Base de datos PostgreSQL
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=nombre_base_datos
+DB_USER=usuario
+DB_PASSWORD=contraseña
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Cliente Clientify
+CLIENTIFY_API_TOKEN=tu_token_de_clientify
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Puerto del servidor
+PORT=5000
 
-### Code Splitting
+# Configuración de correo
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=tu_correo@gmail.com
+EMAIL_PASS=tu_contraseña
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📞 Soporte
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Para cualquier problema con el despliegue, contactar al equipo de desarrollo.
