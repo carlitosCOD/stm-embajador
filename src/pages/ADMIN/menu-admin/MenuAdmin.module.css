@@ -1,0 +1,165 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/*  Header superior */
+.header {
+  height: 91px;
+  background-color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10 25px;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+}
+
+.logoUnac {
+
+  align-items: center;
+  display: flex;
+  height: 44px;
+  
+}
+
+.titulo {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.perfilUsuario {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 3px 37px;
+  cursor: pointer;
+  position: relative;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.nombreUsuario {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.flecha {
+  font-size: 12px;
+}
+
+.menuDesplegable {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #2e2e2e; /* gris oscuro suave */
+  border: 2px solid #444; /* borde visible pero sutil */
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 180px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+/* El contenedor UL */
+.menuDesplegable ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cada opción */
+.menuDesplegable li {
+  background-color: #3a3a3a; /* cada opción dentro de un rectángulo */
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  border-radius: 6px;
+  border: 1px solid #4a4a4a; /* contorno suave */
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Último li sin margen inferior */
+.menuDesplegable li:last-child {
+  margin-bottom: 0;
+}
+
+/* Efecto hover */
+.menuDesplegable li:hover {
+  background-color: #505050;
+  border-color: #666;
+}
+
+/* 🔹 Sidebar lateral */
+.sidebar {
+  width: 220px;
+  background-color: #222;
+  height: 100%;
+  padding-top: 80px; /* deja espacio para el header */
+  position: fixed;
+  top: 15;
+  left: 0;
+  padding-top: 80px; /* header height */
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0 15px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ccc;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.active {
+  background-color: #f9b233; /* amarillo */
+  color: #000;
+  font-weight: bold;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* 🔹 Contenido principal */
+.mainContent {
+  margin-left: 220px; /* ancho sidebar */
+  margin-top: 65px; /* alto header */
+  padding: 20px;
+ 
+  min-height: calc(100vh - 65px);
+}
