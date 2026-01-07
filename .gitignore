@@ -31,3 +31,12 @@ Thumbs.db
 
 # Archivos de respaldo
 *.backup
+
+# Uploads (archivos de usuarios)
+backend/uploads/
+
+# Logs del sistema
+logs/
+
+# PM2 / producción
+ecosystem.config.js

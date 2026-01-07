@@ -10,7 +10,7 @@ const fotoToUrl = (fotoPath) => {
   if (fotoPath.startsWith("http")) {
     return `${fotoPath}?t=${Date.now()}`;
   }
-  return `${API_BASE}/${fotoPath}?t=${Date.now()}`;
+  return `${API_URL.replace("/api", "")}/${fotoPath}?t=${Date.now()}`;
 };
 
 /* -------------------- FotoPanel -------------------- */

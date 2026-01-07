@@ -158,23 +158,32 @@ function Configuracion({ modoOscuro, setModoOscuro }) {
             </div>
           </div>
 
-          <div className="config-item">
-            <p className="config-label">Idioma</p>
-            <div className="config-buttons-row">
-              <button
-                className={`btn ${idioma === 'es' ? 'btn-yellow activo' : 'btn-outline'}`}
-                onClick={() => setIdioma('es')}
-              >
-                🇪🇸 Español
-              </button>
-              <button
-                className={`btn ${idioma === 'en' ? 'btn-yellow activo' : 'btn-outline'}`}
-                onClick={() => setIdioma('en')}
-              >
-                🇺🇸 English
-              </button>
-            </div>
-          </div>
+        {/*  =====================================================================
+                            Idioma - Comentado por ahora 
+                            esta funcionalidad se puede agregar luego cuando sea 
+                            necesario para embajadores internacionales de habla inglesa o distinta.
+        (toca que el encargado de backend agregue soporte para multi-idioma o una api que lo haga)
+            ======================================================================
+
+
+  <div className="config-item">
+    <p className="config-label">Idioma</p>
+    <div className="config-buttons-row">
+      <button
+        className={`btn ${idioma === 'es' ? 'btn-yellow activo' : 'btn-outline'}`}
+        onClick={() => setIdioma('es')}
+      >
+        🇪🇸 Español
+      </button>
+      <button
+        className={`btn ${idioma === 'en' ? 'btn-yellow activo' : 'btn-outline'}`}
+        onClick={() => setIdioma('en')}
+      >
+        🇺🇸 English
+      </button>
+    </div>
+  </div> 
+*/}
         </section>
 
         <section className="config-box">

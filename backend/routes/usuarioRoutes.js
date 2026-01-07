@@ -1,6 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { 
+const path = require("path");
+const multer = require("multer");
+
+const {
   registrarUsuario,
   loginUsuario,
   verificarToken: verificarCuenta,
@@ -11,21 +14,41 @@ const {
   obtenerPerfil,
   actualizarPerfil,
   obtenerAdministradores,
-  eliminarAdministrador
-} = require('../controllers/usuarioController');
-const { authMiddleware } = require('../middleware/authMiddleware');
-const db = require('../config/db');
+  eliminarAdministrador,
+} = require("../controllers/usuarioController");
 
-// Rutas públicas
-router.post('/registro', registrarUsuario);
-router.post('/login', loginUsuario);
-router.get('/verificar/:token', verificarCuenta);
-router.post('/solicitar-restablecimiento', solicitarRestablecimiento);
-router.post('/restablecer-contrasena/:token', restablecerContrasena);
-router.post('/reenviar-verificacion', reenviarVerificacion);
+const { authMiddleware } = require("../middleware/authMiddleware");
+const db = require("../config/db");
 
-// Validar token de restablecimiento
-router.get('/validar-token/:token', async (req, res) => {
+/* =========================
+   CONFIGURACIÓN DE MULTER
+========================= */
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `user-${req.usuario.id}${ext}`);
+  },
+});
+
+const upload = multer({ storage });
+
+/* =========================
+   RUTAS PÚBLICAS
+========================= */
+router.post("/registro", registrarUsuario);
+router.post("/login", loginUsuario);
+router.get("/verificar/:token", verificarCuenta);
+router.post("/solicitar-restablecimiento", solicitarRestablecimiento);
+router.post("/restablecer-contrasena/:token", restablecerContrasena);
+router.post("/reenviar-verificacion", reenviarVerificacion);
+
+/* =========================
+   VALIDAR TOKEN
+========================= */
+router.get("/validar-token/:token", async (req, res) => {
   const { token } = req.params;
 
   try {
@@ -45,13 +68,18 @@ router.get('/validar-token/:token', async (req, res) => {
   }
 });
 
-// Rutas protegidas para usuarios autenticados
-router.get('/perfil', authMiddleware, obtenerPerfil);
-router.put('/perfil', authMiddleware, actualizarPerfil);
-router.post('/cambiar-contrasena', authMiddleware, cambiarContrasena);
+/* =========================
+   RUTAS PROTEGIDAS (USUARIO)
+========================= */
+router.get("/perfil", authMiddleware, obtenerPerfil);
+router.put("/perfil", authMiddleware, upload.single("foto"), actualizarPerfil);
 
-// Rutas protegidas para administradores
-router.get('/administradores', authMiddleware, obtenerAdministradores);
-router.delete('/administradores/:id', authMiddleware, eliminarAdministrador);
+router.post("/cambiar-contrasena", authMiddleware, cambiarContrasena);
+
+/* =========================
+   RUTAS ADMIN
+========================= */
+router.get("/administradores", authMiddleware, obtenerAdministradores);
+router.delete("/administradores/:id", authMiddleware, eliminarAdministrador);
 
 module.exports = router;

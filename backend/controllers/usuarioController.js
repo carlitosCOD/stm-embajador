@@ -20,8 +20,8 @@ const registrarUsuario = async (req, res) => {
       apellido: req.body.apellido,
       correo_electronico: req.body.correo_electronico,
       rol: req.body.rol,
-      tiene_codigo: !!req.body.codigo_admin
-    }
+      tiene_codigo: !!req.body.codigo_admin,
+    },
   });
 
   const {
@@ -31,8 +31,8 @@ const registrarUsuario = async (req, res) => {
     numero_telefonico,
     contraseña,
     acepta_privacidad,
-    rol = 'usuario',
-    codigo_admin
+    rol = "usuario",
+    codigo_admin,
   } = req.body;
 
   // Validaciones
@@ -84,18 +84,18 @@ const registrarUsuario = async (req, res) => {
     const hash = await bcrypt.hash(contraseña, saltRounds);
 
     // Determinar rol: permitir 'admin' si se proporciona el código correcto
-    let rolFinal = 'usuario';
-    if (rol === 'admin') {
+    let rolFinal = "usuario";
+    if (rol === "admin") {
       console.log("🔐 Intento de registro como admin");
       console.log("📄 Código proporcionado:", codigo_admin);
-      
+
       // Verificar código secreto para registro de administradores
-      const codigoSecreto = process.env.CODIGO_ADMIN || 'ADMIN123';
+      const codigoSecreto = process.env.CODIGO_ADMIN || "ADMIN123";
       console.log("🔑 Código esperado:", codigoSecreto);
-      
+
       if (codigo_admin === codigoSecreto) {
         console.log("✅ Código de admin válido - asignando rol admin");
-        rolFinal = 'admin';
+        rolFinal = "admin";
       } else {
         console.log("❌ Código de admin inválido - manteniendo rol usuario");
       }
@@ -118,7 +118,7 @@ const registrarUsuario = async (req, res) => {
       numero_telefonico,
       hash,
       acepta_privacidad,
-      rolFinal
+      rolFinal,
     ];
 
     const result = await db.query(insertQuery, values);
@@ -181,14 +181,15 @@ const registrarUsuario = async (req, res) => {
           code: error.code,
           command: error.command,
           response: error.response,
-          message: error.message
+          message: error.message,
         });
       }
     });
 
     console.log("✅ Usuario registrado:", nuevoUsuario);
     res.status(201).json({
-      mensaje: "Usuario registrado exitosamente. Revisa tu correo para verificar tu cuenta.",
+      mensaje:
+        "Usuario registrado exitosamente. Revisa tu correo para verificar tu cuenta.",
       token,
       usuario: nuevoUsuario,
     });
@@ -196,7 +197,7 @@ const registrarUsuario = async (req, res) => {
     console.error("❌ Error al registrar usuario:", err);
     console.error("📋 Detalles del error:", {
       message: err.message,
-      stack: err.stack
+      stack: err.stack,
     });
     res.status(500).json({ error: "Error interno del servidor." });
   }
@@ -270,9 +271,9 @@ const reenviarVerificacion = async (req, res) => {
       transporter.sendMail(mailOptions, (error) => {
         if (error) {
           console.error("❌ Error al enviar correo de verificación:", error);
-          return res.status(500).json({ 
+          return res.status(500).json({
             error: "Error al enviar correo.",
-            detalle: error.message 
+            detalle: error.message,
           });
         }
 
@@ -427,7 +428,8 @@ const actualizarPerfil = (req, res) => {
     correo_electronico,
     numero_telefonico,
     informacion_adicional,
-  } = req.body;
+  } = req.body || {};
+
   const nuevaFotoUrl = req.file ? `uploads/${req.file.filename}` : null;
 
   const queryGet = "SELECT * FROM usuarios_registro WHERE id = $1";
@@ -535,7 +537,10 @@ const solicitarRestablecimiento = (req, res) => {
       return res.status(500).json({ error: "Error al buscar usuario." });
     }
     if (results.rows.length === 0) {
-      console.log("⚠️ Usuario no encontrado para restablecimiento:", correo_electronico);
+      console.log(
+        "⚠️ Usuario no encontrado para restablecimiento:",
+        correo_electronico
+      );
       return res
         .status(404)
         .json({ error: "No existe un usuario con ese correo." });
@@ -581,21 +586,27 @@ const solicitarRestablecimiento = (req, res) => {
 
         transporter.sendMail(mailOptions, (error) => {
           if (error) {
-            console.error("❌ Error al enviar correo de restablecimiento:", error);
+            console.error(
+              "❌ Error al enviar correo de restablecimiento:",
+              error
+            );
             console.error("📋 Detalles del error:", {
               code: error.code,
               command: error.command,
               response: error.response,
-              message: error.message
+              message: error.message,
             });
-            return res.status(500).json({ 
+            return res.status(500).json({
               error: "Error al enviar correo.",
               detalle: error.message,
-              codigo: error.code
+              codigo: error.code,
             });
           }
 
-          console.log("✅ Correo de restablecimiento enviado a:", correo_electronico);
+          console.log(
+            "✅ Correo de restablecimiento enviado a:",
+            correo_electronico
+          );
           res.status(200).json({ mensaje: "Correo enviado correctamente." });
         });
       }
@@ -727,12 +738,15 @@ const cambiarContrasena = async (req, res) => {
   console.log("🔐 Iniciando cambio de contraseña para usuario:", req.usuarioId);
   console.log("📄 Headers recibidos:", req.headers);
   console.log("📄 Body recibido:", req.body);
-  
+
   const usuarioId = req.usuarioId; // Usar req.usuarioId en lugar de req.usuario.id
   const { contrasenaActual, nuevaContrasena } = req.body;
 
   console.log("🔐 Intento de cambio de contraseña para usuario:", usuarioId);
-  console.log("📄 Datos recibidos:", { contrasenaActual: !!contrasenaActual, nuevaContrasena: !!nuevaContrasena });
+  console.log("📄 Datos recibidos:", {
+    contrasenaActual: !!contrasenaActual,
+    nuevaContrasena: !!nuevaContrasena,
+  });
 
   // Validaciones básicas
   if (!contrasenaActual || !nuevaContrasena) {
@@ -742,19 +756,24 @@ const cambiarContrasena = async (req, res) => {
 
   if (nuevaContrasena.length < 6) {
     console.log("❌ Contraseña muy corta");
-    return res.status(400).json({ error: "La nueva contraseña debe tener al menos 6 caracteres." });
+    return res
+      .status(400)
+      .json({ error: "La nueva contraseña debe tener al menos 6 caracteres." });
   }
 
   const query = "SELECT contraseña FROM usuarios_registro WHERE id = $1";
 
   db.query(query, [usuarioId], async (err, results) => {
     if (err) {
-      console.error("❌ Error al buscar usuario para cambio de contraseña:", err);
+      console.error(
+        "❌ Error al buscar usuario para cambio de contraseña:",
+        err
+      );
       return res.status(500).json({ error: "Error al buscar usuario." });
     }
-    
+
     console.log("🔍 Resultados de búsqueda de usuario:", results.rows.length);
-    
+
     if (results.rows.length === 0) {
       console.log("❌ Usuario no encontrado");
       return res.status(404).json({ error: "Usuario no encontrado." });
@@ -888,23 +907,26 @@ const actualizarUsuarioPorAdmin = (req, res) => {
 const crearAdmin = async (req, res) => {
   try {
     const { nombre, apellido, correo_electronico, contraseña } = req.body;
-    
+
     // Validaciones
     if (!nombre || !apellido || !correo_electronico || !contraseña) {
-      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+      return res
+        .status(400)
+        .json({ error: "Todos los campos son obligatorios" });
     }
-    
+
     // Verificar que el correo no exista
-    const existeQuery = 'SELECT id FROM usuarios_registro WHERE correo_electronico = $1';
+    const existeQuery =
+      "SELECT id FROM usuarios_registro WHERE correo_electronico = $1";
     const existeResult = await db.query(existeQuery, [correo_electronico]);
-    
+
     if (existeResult.rows.length > 0) {
-      return res.status(400).json({ error: 'El correo ya está registrado' });
+      return res.status(400).json({ error: "El correo ya está registrado" });
     }
-    
+
     // Hashear contraseña
     const hash = await bcrypt.hash(contraseña, 10);
-    
+
     // Insertar usuario admin
     const insertQuery = `
       INSERT INTO usuarios_registro 
@@ -912,27 +934,26 @@ const crearAdmin = async (req, res) => {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING id, nombre, apellido, correo_electronico, rol
     `;
-    
-    const values = [nombre, apellido, correo_electronico, hash, 'admin', 1, 1];
+
+    const values = [nombre, apellido, correo_electronico, hash, "admin", 1, 1];
     const result = await db.query(insertQuery, values);
-    
-    console.log('✅ Usuario administrador creado:', result.rows[0]);
+
+    console.log("✅ Usuario administrador creado:", result.rows[0]);
     res.status(201).json({
-      mensaje: 'Usuario administrador creado exitosamente',
-      usuario: result.rows[0]
+      mensaje: "Usuario administrador creado exitosamente",
+      usuario: result.rows[0],
     });
   } catch (error) {
-    console.error('❌ Error al crear administrador:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    console.error("❌ Error al crear administrador:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 };
-
 
 // Obtener todos los administradores
 const obtenerAdministradores = async (req, res) => {
   try {
     console.log("📥 Solicitud para obtener administradores");
-    
+
     const query = `
       SELECT id, nombre, apellido, correo_electronico, numero_telefonico, 
              fecha_registro, verificado, activo
@@ -940,12 +961,12 @@ const obtenerAdministradores = async (req, res) => {
       WHERE rol = 'admin'
       ORDER BY fecha_registro DESC
     `;
-    
+
     const result = await db.query(query);
     console.log(`✅ ${result.rows.length} administradores encontrados`);
-    
+
     res.status(200).json({
-      administradores: result.rows
+      administradores: result.rows,
     });
   } catch (err) {
     console.error("❌ Error al obtener administradores:", err);
@@ -958,33 +979,35 @@ const eliminarAdministrador = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`📥 Solicitud para eliminar administrador ID: ${id}`);
-    
+
     // Verificar que el ID sea un número válido
     if (!id || isNaN(id)) {
       return res.status(400).json({ error: "ID de administrador inválido." });
     }
-    
+
     // No permitir eliminar al propio usuario que hace la solicitud
     if (parseInt(id) === req.usuario.id) {
-      return res.status(400).json({ error: "No puedes eliminar tu propia cuenta." });
+      return res
+        .status(400)
+        .json({ error: "No puedes eliminar tu propia cuenta." });
     }
-    
+
     const query = `
       DELETE FROM usuarios_registro 
       WHERE id = $1 AND rol = 'admin'
       RETURNING id, nombre, apellido, correo_electronico
     `;
-    
+
     const result = await db.query(query, [id]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Administrador no encontrado." });
     }
-    
+
     console.log("✅ Administrador eliminado:", result.rows[0]);
-    res.status(200).json({ 
+    res.status(200).json({
       mensaje: "Administrador eliminado correctamente.",
-      administrador: result.rows[0]
+      administrador: result.rows[0],
     });
   } catch (err) {
     console.error("❌ Error al eliminar administrador:", err);
@@ -995,13 +1018,13 @@ const eliminarAdministrador = async (req, res) => {
 module.exports = {
   registrarUsuario,
   loginUsuario,
-  verificarToken: verificarCuenta,  // Corregido: usar verificarCuenta
+  verificarToken: verificarCuenta, // Corregido: usar verificarCuenta
   solicitarRestablecimiento,
-  restablecerContraseña: restablecerContrasena,  // Corregido: usar restablecerContrasena
-  cambiarContraseña: cambiarContrasena,  // Corregido: usar cambiarContrasena
+  restablecerContraseña: restablecerContrasena, // Corregido: usar restablecerContrasena
+  cambiarContraseña: cambiarContrasena, // Corregido: usar cambiarContrasena
   reenviarVerificacion,
   obtenerPerfil,
   actualizarPerfil,
-  obtenerAdministradores,  // Nueva función
-  eliminarAdministrador    // Nueva función
+  obtenerAdministradores, // Nueva función
+  eliminarAdministrador, // Nueva función
 };

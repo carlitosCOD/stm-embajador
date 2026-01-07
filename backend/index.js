@@ -4,13 +4,17 @@ const cors = require("cors");
 const path = require("path");
 const axios = require("axios");
 require("dotenv").config();
+
 console.log("🔐 CLIENTIFY_API_TOKEN cargado:", process.env.CLIENTIFY_API_TOKEN);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const API_TOKEN = process.env.CLIENTIFY_API_TOKEN;
 
-// ✅ Middlewares
+// =======================
+// ✅ MIDDLEWARES
+// =======================
+
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://localhost:5000"],
@@ -18,22 +22,28 @@ app.use(
   })
 );
 
-app.use("/uploads", express.static("uploads"));
-
 app.use(express.json());
+
+// 👉 SERVIR IMÁGENES SUBIDAS (AVATARES, ETC)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ✅ Rutas personalizadas
+// =======================
+// ✅ RUTAS
+// =======================
+
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const referidoRoutes = require("./routes/referidoRoutes");
 
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/referidos", referidoRoutes);
 
-// 👇 Cambio mínimo: montamos también referidoRoutes en /api
+// (opcional, lo dejé porque ya lo estabas usando)
 app.use("/api", referidoRoutes);
 
-// ✅ Ruta para obtener todos los correos desde Clientify
+// =======================
+// ✅ CLIENTIFY – OBTENER CORREOS
+// =======================
+
 app.get("/api/correos", async (req, res) => {
   try {
     const contactos = [];
@@ -48,7 +58,6 @@ app.get("/api/correos", async (req, res) => {
       });
 
       const data = response.data;
-      console.log("🔎 Página recibida:", data.results.length);
 
       if (!Array.isArray(data.results)) {
         throw new Error("Respuesta inesperada de Clientify");
@@ -64,20 +73,15 @@ app.get("/api/correos", async (req, res) => {
 
     res.json({ cantidad: correos.length, correos });
   } catch (error) {
-    console.error("❌ Error al consultar Clientify:");
-    if (error.response) {
-      console.error("🔴 Respuesta del servidor:", error.response.data);
-      console.error("🔴 Código de estado:", error.response.status);
-    } else if (error.request) {
-      console.error("🟡 No se recibió respuesta:", error.request);
-    } else {
-      console.error("⚠️ Error general:", error.message);
-    }
+    console.error("❌ Error al consultar Clientify:", error.message);
     res.status(500).json({ error: "Error al obtener correos de Clientify" });
   }
 });
 
-// ✅ NUEVA RUTA: Verificar si un correo existe en Clientify
+// =======================
+// ✅ CLIENTIFY – VERIFICAR CORREO
+// =======================
+
 app.get("/api/verificar-correo", async (req, res) => {
   const email = req.query.email;
 
@@ -98,6 +102,7 @@ app.get("/api/verificar-correo", async (req, res) => {
       });
 
       const data = response.data;
+
       if (!Array.isArray(data.results)) {
         throw new Error("Respuesta inesperada de Clientify");
       }
@@ -109,28 +114,24 @@ app.get("/api/verificar-correo", async (req, res) => {
     const existe = contactos.some(
       (c) => c.email?.toLowerCase() === email.toLowerCase()
     );
+
     res.json({ existe });
   } catch (error) {
-    console.error("❌ Error al verificar correo en Clientify:");
-    if (error.response) {
-      console.error("🔴 Respuesta del servidor:", error.response.data);
-      console.error("🔴 Código de estado:", error.response.status);
-    } else if (error.request) {
-      console.error("🟡 No se recibió respuesta:", error.request);
-    } else {
-      console.error("⚠️ Error general:", error.message);
-    }
-    res.status(500).json({
-      error: "Error al verificar el correo en Clientify",
-      detalle: error.response?.data || error.message,
-    });
+    console.error("❌ Error al verificar correo:", error.message);
+    res.status(500).json({ error: "Error al verificar el correo" });
   }
 });
 
-// ✅ Servir archivos estáticos del frontend (build)
+// =======================
+// ✅ FRONTEND BUILD
+// =======================
+
 app.use(express.static(path.join(__dirname, "../build")));
 
-// ✅ Iniciar servidor
+// =======================
+// ✅ INICIAR SERVIDOR
+// =======================
+
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
