@@ -1,0 +1,38 @@
+    .soporte-modal {
+    background: var(--container-bg);
+    padding: 28px;
+    border-radius: 14px;
+    width: 420px;
+    max-width: 92%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    animation: aparecer 0.25s ease;
+    }
+
+    .soporte-desc {
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    }
+
+    .soporte-modal textarea {
+    width: 100%;
+    height: 130px;
+    border-radius: 8px;
+    border: none;
+    padding: 12px;
+    resize: none;
+    background: var(--background-dark);
+    color: var(--text-color);
+    margin-bottom: 16px;
+    }
+
+    @keyframes aparecer {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    }

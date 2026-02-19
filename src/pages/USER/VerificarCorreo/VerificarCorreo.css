@@ -1,0 +1,76 @@
+/* src/pages/USER/VerificarCorreo/VerificarCorreo.css */
+.verificar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  
+  color: #fff;
+  text-align: center;
+}
+
+.verificar-card {
+  background-color: #1a1a1a;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  width: 90%;
+  max-width: 420px;
+}
+
+.texto-exito {
+  color: #00ff99;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.texto-error {
+  color: #ff4444;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.texto-cargando {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.btn-amarillo {
+  background-color: #ffc107;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s;
+}
+
+.btn-amarillo:hover {
+  background-color: #ffb300;
+}
+
+.btn-secundario {
+  background: transparent;
+  color: #ffc107;
+  border: 2px solid #ffc107;
+  border-radius: 30px;
+  padding: 8px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn-secundario:hover {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.acciones-error {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}

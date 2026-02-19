@@ -1,0 +1,122 @@
+/* ================= LAYOUT ================= */
+
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.adminSidebar {
+  width: 230px;
+  background: #1c1c1c;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ✅ AQUÍ */
+
+  padding: 20px 15px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+
+
+
+/* ================= LOGO ================= */
+
+.adminLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 25px;
+}
+
+/* 👉 AQUÍ CONTROLAS EL TAMAÑO DEL LOGO */
+.adminLogo img {
+  width:622px;   
+  height: auto;
+}
+
+
+/* ================= MENU ================= */
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.menuList li {
+  margin-bottom: 10px;
+}
+
+.menuList a {
+  display: block;
+  padding: 12px 15px;
+
+  border-radius: 8px;
+  text-decoration: none;
+
+  color: #ccc;
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.menuList a:hover {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.active a {
+  background: #ffb400;
+  color: #000;
+  font-weight: bold;
+}
+
+
+/* ================= LOGOUT ================= */
+
+.logoutBox {
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+
+.logoutBox button {
+  width: 100%;
+
+  background: #2980b9;
+  border: none;
+
+  padding: 10px;
+  border-radius: 8px;
+
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logoutBox button:hover {
+  background: #3498db;
+}
+
+
+/* ================= CONTENT ================= */
+
+.adminContent {
+  margin-left: 230px;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 30px;
+
+  /* ❌ SIN BACKGROUND */
+}

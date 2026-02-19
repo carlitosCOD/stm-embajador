@@ -1,0 +1,279 @@
+/* ============ MENÚ SUPERIOR (GRANDE) ============ */
+.menuSuperior {
+  display: grid;
+  grid-template-columns: 10fr auto 0.6fr;
+  align-items: center;
+  background-color: var(--container-bg);
+  color: var(--text-color);
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.logoUnac {
+  height: 55px;
+  width: auto;
+  justify-self: start;
+}
+
+.menuCentro {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.menuDerecha {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.verReferidosBtn1 {
+  background-color: #3a3a3a; /* gris oscuro */
+  color: #f2f2f2; /* texto gris claro */
+  padding: 8px 14px;
+  border: none;
+  border-radius: 66px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+.verReferidosBtn1:hover {
+  background-color: #555;
+}
+
+.verReferidosBtn {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  padding: 8px 14px;
+  border: none;
+  border-radius: 66px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.verReferidosBtn:hover {
+  background-color: #786010;
+}
+
+.perfilUsuario {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  color: var(--text-color);
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--button-primary-bg);
+}
+
+.flecha {
+  font-size: 0.85rem;
+}
+
+.menuDesplegable {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: var(--container-bg);
+  border: 1px solid #444;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 1rem;
+  min-width: 200px;
+  z-index: 1001;
+}
+
+.infoUsuario {
+  border-bottom: 1px solid #555;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+}
+
+.infoUsuario strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.infoUsuario p {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin: 2px 0 0;
+}
+
+.menuDesplegable ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menuDesplegable li {
+  margin: 0.5rem 0;
+}
+
+.menuDesplegable a,
+.cerrarSesionBtn {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  display: block;
+  width: 100%;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.menuDesplegable a:hover,
+.cerrarSesionBtn:hover {
+  background-color: var(--container-bg);
+  color: var(--link-color);
+}
+
+/* ============ MENÚ RESPONSIVE (MÓVIL / TABLET) ============ */
+@media (max-width: 768px) {
+  .menuSuperior {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    height: auto;
+  }
+
+  .logoContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .menuDerecha {
+    display: none; /* Oculta los botones del header en móvil */
+  }
+
+  /* BARRA INFERIOR FIJA */
+  .barraInferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #444;
+    z-index: 1002;
+  }
+
+  .botonInferior {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .botonInferior svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 2px;
+  }
+
+  /* Panel flotante de perfil en móvil */
+  .menuDesplegable {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 260px;
+    max-width: 80%;
+  }
+
+  /* Forzar que el botón Añadir Referido se vea en móviles */
+  .ocultoEnGrande {
+    display: flex !important;
+  }
+}
+
+/* Ocultar barra inferior por defecto (pantallas grandes) */
+.barraInferior {
+  display: none;
+}
+
+/* Mostrar solo en pantallas menores a 768px */
+@media (max-width: 768px) {
+  .barraInferior {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--container-bg);
+    border-top: 1px solid #444;
+    z-index: 999;
+  }
+}
+
+.emoji {
+  font-size: 1.4rem;
+  display: block;
+}
+
+/* ============================================
+   OCULTAR BOTÓN "AÑADIR REFERIDO" EN PC/TABLET
+============================================ */
+.ocultoEnGrande {
+  display: none;
+}
+
+/* ============================================
+   TEMAS: VARIABLES PARA MODO CLARO Y OSCURO
+============================================ */
+
+/* 🌙 Modo Oscuro (por defecto) */
+body.modo-oscuro {
+  --container-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --button-primary-bg: #ffba08;
+  --button-primary-text: #000000;
+  --link-color: #ffba08;
+}
+
+/* ☀️ Modo Claro */
+body.modo-claro {
+  --container-bg: #f2f2f2;
+  --text-color: #1e1e1e;
+  --button-primary-bg: #ffd60a;
+  --button-primary-text: #000000;
+  --link-color: #d47c00;
+}
