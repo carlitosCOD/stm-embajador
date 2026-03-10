@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stm-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - backend/.env
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: stm-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend

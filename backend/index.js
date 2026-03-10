@@ -13,15 +13,23 @@ const PORT = process.env.PORT || 5000;
 // =======================
 
 const CLIENTIFY_API_TOKEN = process.env.CLIENTIFY_API_TOKEN;
-const FRONTEND_URL = process.env.FRONTEND_URL || "*";
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // =======================
-// ✅ MIDDLEWARES GLOBALES
+// 🌐 CONFIGURACIÓN CORS
 // =======================
+
+const allowedOrigins = [FRONTEND_URL, "http://localhost:3000"];
 
 app.use(
   cors({
-    origin: FRONTEND_URL === "*" ? "*" : FRONTEND_URL.split(","),
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("No permitido por CORS"));
+      }
+    },
     credentials: true,
   }),
 );
