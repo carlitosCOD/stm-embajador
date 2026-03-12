@@ -33,7 +33,8 @@ Thumbs.db
 *.backup
 
 # Uploads (archivos de usuarios)
-backend/uploads/
+backend/uploads/*
+!backend/uploads/.gitkeep
 
 # Logs del sistema
 logs/
