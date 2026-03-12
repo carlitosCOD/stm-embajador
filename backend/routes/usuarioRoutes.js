@@ -113,7 +113,7 @@ router.post(
 // usuarioRoutes.js
 router.get("/validar-token/:token", async (req, res) => {
   try {
-    const { token } = req.params;
+    const token = decodeURIComponent(req.params.token).trim();
 
     const result = await db.query(
       "SELECT id FROM usuarios_registro WHERE reset_token=$1 AND token_expira > NOW()",
